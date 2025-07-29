@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Artistes</title>
+    <style>
+        body {
+            background-color: rgb(126, 123, 119);
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .artist {
+            text-align: center;
+            margin: 20px;
+            width: 200px;
+        }
+        img {
+            width:100%;
+            clip-path: circle(50%);
+        }
+        p {
+            color: black;
+        }
+     
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Liste des Artistes</h1>
+
+    <div class="container">
+        {{range .}}
+            <a href="/artist/{{.ID}}">
+                <div class="artist">
+                    <img src="{{.Image}}">
+                    <p>{{.Name}}</p>
+                </div>
+            </a>
+        {{end}}
+    </div>
+
+</body>
+</html>
