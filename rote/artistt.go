@@ -2,13 +2,43 @@ package rote
 
 import (
 	"html/template"
+	"myprojet/artists"
 	"net/http"
+	"strconv"
 )
 
 func Artist(w http.ResponseWriter, r *http.Request) {
-	temp, err := template.ParseFiles("template/index.html")
-	if err != nil {
-		http.Error(w, "500 error internal server", http.StatusInternalServerError)
+
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
 	}
-	temp.Execute(w, nil)
+	
+	ListeAtists, err := artists.GetArtists()
+	if err != nil {
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	
+
+	idStr := r.URL.Path[len("/artist/"):]
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "404 page not found", http.StatusNotFound)
+		return
+	}
+
+	for _, artist := range ListeAtists {
+		if id == artist.ID {
+			tmpl, err := template.ParseFiles("template/result.html")
+			if err != nil {
+				http.Error(w, "Error loading page", http.StatusInternalServerError)
+				return
+			}
+			tmpl.Execute(w, artist)
+			return
+		}
+	}
+
+	http.Error(w, "404 artist not found", http.StatusNotFound)
 }
