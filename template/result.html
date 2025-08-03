@@ -2,10 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>The artist</title>
+    <title>{{.Name}}</title>
+    <style>
+        body {
+            background-color: #6e6a6a;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+        } 
+        img {
+            clip-path: circle(50%);
+        }
+    </style>
    
 </head>
 
 <body>
-    <h1>hello</h1>
+    <h1 style="text-align: center;">{{.Name}}</h1>
+
+    <div class="container">
+        <p><img src="{{.Image}}"></p>
+        <p>Members: {{.Members}}</p>
+        <p>CreationDate: {{.CreationDate}}</p>
+        <p>FirstAlbum: {{.FirstAlbum}}</p>
+    </div>
+
 </body>
